@@ -1,0 +1,47 @@
+Create account on Github.com
+----------------------------------------
+
+Login
+
+click on create repository or New button
+
+Give the Repository Name and description> finish
+
+------------------------------------------------------------------
+
+Basic Commands
+----------------------------
+
+git init (initialize Repository)
+git add README.md (to add new Readme file where you can add info of your Project)
+
+git add . (add all files which you have changed)
+
+git commit -m "first commit" (you need to commit the changes)
+
+git branch -M main (By default the brach is master, change the branch to main by executing this command)
+
+git remote add origin https://github.com/sonam-niit/Allstate-Backend.git(change the origin)
+
+git push -u origin main (To push the code to remote repo from Local Repo)
+
+
+-----------------------------------------------------------------------------------------------
+
+To execute this commands install Git software.
+
+open cmd --> execute the command to check version
+
+> git --version
+
+for very first time you need to config your github account
+
+> git config --global user.email "xyz@gmail.com"
+
+once the config done you can execute above mentioned commands.
+
+
+
+
+
+
