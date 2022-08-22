@@ -1,0 +1,439 @@
+click on eclipse--> select the workspace folder --> click on launch
+
+once you open eclipes -> file --> new --> other --> java project --> give the project name --> next --> it will ask you to create module file (click on Don't create) --> open perspective
+
+
+It will open your project
+-----------------------------------------------------------------------
+project structure has src folder where you need to create your java code.
+
+any project which we are creating --> you need to seprate your code in package
+(folder management)
+
+right click on src and new --> select package --> give the package name
+
+when you create package name(it always in lower case, start with keywords like org, com, edu etc)
+
+example: com.allstate.first
+(com --> organization name --> project name)
+
+-----------------------------------------------------------------------------------------------------
+
+Now let's create a class
+--------------------------------
+
+Class Name always start with upper case
+if the name has more than one word then the all words first letter should be in upper case.
+
+
+class UpperCamelCase
+{
+          
+}
+
+--------------------------------------------------------------------------------
+
+If you want to run your program first of all you have to start it. 
+
+In java the starting point of your program is Main method.
+
+How to write main method
+-----------------------------------------
+
+public static void main (String arg[])
+{
+        //write all your code statements
+}
+
+public: to access everywhere
+static: to start the method by it self
+void: it will not return any value
+main: name of the method
+
+String: class 
+args[]: array of Strings
+
+{  } : block of code
+
+----------------------------------------------------------------------
+
+If you want to print something in console then
+
+user System.out.println(); // in this bracket you can give any value.
+
+System: is class
+out: is a varible declared in the class System
+println: is the method
+
+---------------------------------------------------------------------------
+
+Create one class Named FirstDemo.java and add below mentioned code.
+
+package com.allstate.first;
+
+public class FirstDemo {
+
+	public static void main(String args[]) {
+		
+		System.out.println("Hello World");
+	}
+}
+
+
+-------------------------------------------------------------------------
+save the file and run it as JavaApplication. you can see the console with HelloWorld.
+
+When you declare variables in your code following are the naming convention rule:
+
+1. name must start with alphabet
+2. it can be alphaniumeric
+3. name must startwith lowercase, if more than one word then the second word first letter should be in Upper case.
+
+4. don't use any special symbols except _ (underscore) 0r $.
+
+example: num1, a1, ab, firstName, emailId, passportNum etc.
+
+Variable Demo with printing statements
+--------------------------------------------------
+
+package com.allstate.first;
+
+public class VariableDemo {
+
+	public static void main(String[] args) {
+		
+		int num1=10;
+		int num2=20;
+		
+		System.out.println("First Number: " + num1);
+		System.out.println("Second Number: " +num2);
+		System.out.println("Addition: " + (num1 + num2));
+	}
+}
+_____________________________________________________________________________________________
+
+Conditional check then we use this control statements.
+
+to do comparison we use relational operators (<, > , <=, >=, ==, != (not equals))
+
+If you want to take input from user then we should use Scanner class
+(which is available in java.util package, so we need to import this for use)
+
+Demo using if and scanner
+--------------------------------------------------------------
+package com.allstate.first;
+
+import java.util.Scanner;
+
+public class IfDemo {
+
+	public static void main(String[] args) {
+
+		int num1,num2;
+		Scanner sc = new Scanner(System.in); //created object of scanner class
+		System.out.println("Enter first number");
+		num1= sc.nextInt();
+		System.out.println("Enter Another Number");
+		num2=sc.nextInt();
+
+		if (num1 > num2) {
+			System.out.println(num1 + " is largest");
+		} else {
+			System.out.println(num2 + " is largest");
+		}
+		
+		sc.close();//close the object when utilization of that object completed
+	}
+}
+
+
+___________________________________________________________________________________________________
+
+Else If Demo
+--------------------------------
+
+package com.allstate.first;
+
+import java.util.Scanner;
+
+public class IfDemo {
+
+	public static void main(String[] args) {
+
+		float percent;
+		Scanner sc = new Scanner(System.in); //created object of scanner class
+		System.out.println("Enter percentage");
+		percent= sc.nextFloat();
+		if (percent>=70 && percent <=100) {
+			System.out.println("Distinction");
+		} 
+		else if(percent>=60 && percent <70) {
+			System.out.println("First class");
+		}
+		else if(percent>=50 && percent <60) {
+			System.out.println("Second class");
+		}
+		else if(percent>=35 && percent <50) {
+			System.out.println("Pass class");
+		}
+		else if(percent>=0 && percent <35) {
+			System.out.println("Fail");
+		}
+		else {
+			System.out.println("Enter Correct percentage");
+		}
+		
+		sc.close();//close the object when utilization of that object completed
+	}
+}
+
+-------------------------------------------------------------------------------------------------
+
+1. Write a programm to check wether user is valid for vote or not (age>=18)
+
+2. Write a program to check weather the number is odd or even
+
+3. Write a program to calculate simple Intrest (principle, rateOfIntrest, noOfYears)
+
+4. Write a program to calculate area and perimeter of square.
+
+Loops
+----------------------
+itearte with the code
+
+package com.allstate.first;
+
+public class LoopDemo {
+
+	public static void main(String[] args) {
+		
+		System.out.println("Using while");
+		int i=1;
+		while(i<=10) {
+			System.out.println(i);
+			i++; // increase the value by 1
+		}
+		
+		System.out.println("Using do while");
+		i=1;
+		do {
+			System.out.println(i);
+			i++; // increase the value by 1
+		}while(i<=10);
+		
+		System.out.println("For loop");
+		for(i=1;i<=10;i++) {
+			System.out.println(i);
+		}
+	}
+}
+
+---------------------------------------------------------------------------------------------------------
+
+1. WAP to print first 50 odd numbers.
+
+2. WAP to print the sum of first 10 natural numbers.
+
+3. WAP to find out the factorial of 5.
+
+
+
+-------------------------------------------------------------------------------------------------------
+
+Static Key word.
+
+we can create static variables as well as we can create static method.
+
+if create variable as a static then the variable initialization not happen everytime.
+(help you to do memory management- improve performance of your application)
+
+If you make a method static then we can call those methods directly without creating object of that class.
+
+-------------------------------------------------------------------------------------------------------
+
+this: basically use to refer the class level variables
+
+final: 
+
+final variable: constant (we can't change the value of that variable)
+
+final class : which we can not inherit
+
+final method: which we can not override
+
+
+----------------------------------------------------------------------------------------------------
+
+In Program we can create class, method, variables, constructors
+
+all this can have its own scope for access. which we can define using access modifiers.
+
+public 
+
+private 
+
+protected
+
+default(Package)	
+
+
+--> All variables are accessible in same class
+--> In Package public, protected and default accessible (private not accessible)
+--> In Another package only public accessible
+--> In Another package if you want to use protected the class must be the child class of your class
+
+Private : to the class
+Public: to everywhere
+Default: Package scope
+Protected: with package and Subclass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
