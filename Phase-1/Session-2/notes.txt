@@ -1,0 +1,256 @@
+constructor: it helps you to construct the object
+------------------------------------------------------------
+
+class Student
+{
+          
+}
+
+Student s= new Student(); // actually it call the default constructor of a class
+
+If you will not create any constructor then compiler creates it for you.
+
+class Student
+{
+     public Student(){
+
+	}     
+}
+
+-----------------------------------------------------------------------------------
+Let's create A constructor
+
+1. constructor name should be same as a class Name.
+2. it doen't have any return type
+3. its a special method which is called when you create an instance of a class
+4. we can create default as well as parameterized constructor.
+5. the main use of constructor is to initialize variables (class level fields)
+6. We can overload the constructors.
+
+Example
+-----------------
+
+package com.allstate.constructor;
+
+public class Student {
+
+	private int id;
+	private String name;
+	
+	//Default Constructor
+	public Student() {
+		System.out.println("Constructor Called");
+	}
+	//Parameterized Constructor
+	//this keyword is used to access class level variables
+	public Student(int id, String name) {
+		this.id=id;
+		this.name=name;
+	}
+	public static void main(String[] args) {
+		Student s= new Student(1,"Sonam");
+		System.out.println(s.id+" "+s.name);
+	}
+}
+
+
+________________________________________________________________________________________
+
+Let's try to work with constructor in the concepts of Inheritance.
+
+Inherit properties from Parent class.
+
+(when you want to reuse the functionality then implement Inheritance.)
+
+Parent class (Super/ Base)
+Child class (Sub/Derived)
+
+extends is the keyword used to implement Inheritance.
+
+The class name which you write after extends keyword is Parent class.
+
+package com.allstate.inheritance;
+
+public class Super {
+
+	public Super() {
+		System.out.println("Parent Constructor Called");
+	}
+}
+
+-------------------------------------------------------------------------------
+
+package com.allstate.inheritance;
+
+public class Sub extends Super{
+
+	public Sub() {
+		//super();
+		System.out.println("Child class Constructor");
+	}
+	
+	public static void main(String[] args) {
+		Sub s= new Sub(); 
+	}
+}
+
+-------------------------------------------------------------------------------------------
+When you create an instance of child class it will call its parent class constructor first.(super())
+
+When the parent class has parametrized constructor then you must have to call it explicitly from child class constructor using super keyword.
+
+Example
+---------------
+
+package com.allstate.inheritance;
+
+public class Super {
+
+	public Super(String name) {
+		System.out.println("Parent Constructor Called");
+		System.out.println("Welcome "+name);
+	}
+}
+-----------------------------------------------------------------------------
+package com.allstate.inheritance;
+
+public class Sub extends Super{
+
+	public Sub() {
+		super("sonam");
+		System.out.println("Child class Constructor");
+	}
+	
+	public static void main(String[] args) {
+		Sub s= new Sub(); 
+	}
+}
+
+______________________________________________________________________________________________
+
+Inheritance Topics
+
+Accessinbility
+------------------------------------------------
+
+package com.allstate.inheritance;
+
+public class Super {
+
+	private int num=10;
+	
+	public void print() {
+		System.out.println("Hello World");
+	}
+}
+
+package com.allstate.inheritance;
+
+public class Sub extends Super{
+	
+	public static void main(String[] args) {
+		Sub s= new Sub();  //object of child class
+		
+		s.print(); // child can access all the properties and behaviour of parent class
+		//System.out.println(s.num);  //gives and error
+		//child can not access private properties of parent class
+	} 
+}
+
+---------------------------------------------------------------------------------------------------------
+
+Multiple Inheritance is not possible in JAVA because of anbuguity so resolve the same we can use Interface.
+
+interface can hold just method declaration but not implementation.
+
+interface Car{
+	public void start();
+	public void stop();
+	public void changeGear(int n);
+}
+
+whenever you want to use this create a class and implement this interface and use the methods.
+
+package com.allstate.interface1;
+
+//concrete class 
+public class BMW implements Car{
+
+	@Override
+	public void start() {
+		System.out.println("BMW Start method");
+		
+	}
+
+	@Override
+	public void stop() {
+		System.out.println("BMW stop method");
+		
+	}
+
+	@Override
+	public void changeGear(int n) {
+		System.out.println("gear changed to "+n);
+		
+	}
+
+	
+}
+
+
+_____________________________________________________________________________________________________
+
+Collection: its providing buch of classes in interfaces to group objects.
+
+Can't we use array for creating bunch of objects
+
+Student s[]; // yes we can create but the size you have to fixed in advanced.
+
+we want something which is dynamic, the size can grow and shrink as per the requirements.
+
+we can use collection API.
+
+Wrapper Class: which wrap your each datatype in a class
+
+byte: Byte
+int: Integer
+char: Character
+float: Float
+double: Double
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
