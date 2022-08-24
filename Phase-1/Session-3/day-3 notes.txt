@@ -1,0 +1,91 @@
+Inner class
+----------------------
+
+class inside a class( nested class)
+
+basically we use it to achieve some security in out code implementation.
+
+3 types
+----------------------
+
+1. Regular inner class
+
+package com.allstate.inner;
+
+public class Outer {
+
+	private int num=20;
+	
+	class Inner{
+		
+		int innerNum=10;
+		void display() {
+			System.out.println("Inner class Method called");
+			System.out.println("inner class Variable "+innerNum);
+	//we can access all varibles of outer class inside inner including private as well
+			System.out.println("outer class variable "+num);
+		}
+	}
+	
+	public static void main(String[] args) {
+		Outer outObj= new Outer();
+		Outer.Inner innerobj= outObj.new Inner();
+		//call inner class method
+		innerobj.display();
+	}
+}
+
+-----------------------------------------------------------------------------------------------
+
+2. Local Inner class
+
+create a class inside any local block.
+you can create it in if block or any loop block or in method.
+
+if you create it inside a method it is called as a MethodLocalInnerClass.
+
+you can create object on inner class inside a method only and use the methods inside the methods only.
+
+package com.allstate.inner;
+
+public class MethodLocalInner {
+
+	//write a inner class inside a method
+	
+	public void display() {
+		
+		class Inner{
+			void print() {
+				System.out.println("Method called from inner class");
+			}
+		}
+		//Class create inside a method so that you can use it inside a method a method only
+		
+		Inner obj= new Inner();//object creation is possible inside the method only
+		obj.print();
+	}
+	
+	public static void main(String[] args) {
+		MethodLocalInner m= new MethodLocalInner();
+		m.display();
+	}
+}
+________________________________________________________________________________________________________
+
+3. Annonymous Inner class 
+
+If we create interface then we have to implement Interface to use its methods. Means we are creating a class Implementing methods of interface and when it is required we create instance of a class and use methods.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
