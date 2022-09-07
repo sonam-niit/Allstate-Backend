@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="startel" class="com.allstate.eventhandling.event.StartEventListener"></bean>
+	<bean id="stopel" class="com.allstate.eventhandling.event.StopEventListener"></bean>
+	
+	<bean id="cel" class="com.allstate.eventhandling.custom.CustomEventlistener"></bean>
+	<bean id="cep" class="com.allstate.eventhandling.custom.CustomEventpublisher"></bean>
+	
+	
+</beans>
