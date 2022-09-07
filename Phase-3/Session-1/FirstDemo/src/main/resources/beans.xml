@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- h is the object of Hello Class -->
+    <bean id="h" class="com.allstate.firstspring.Hello"></bean>
+    <bean id="a1" class="com.allstate.firstspring.Address">
+    	<property name="city" value="Mumbai"></property>
+    	<property name="state" value="Maharastra"></property>
+    	<property name="pincode" value="401209"></property>
+    </bean>
+	<bean id="s1" class="com.allstate.firstspring.Student">
+		<property name="id" value="1"></property>
+		<property name="name" value="sonam"></property>
+		<property name="address" ref="a1" ></property>
+	</bean>
+</beans>
