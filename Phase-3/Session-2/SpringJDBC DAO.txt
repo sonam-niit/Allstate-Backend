@@ -1,0 +1,415 @@
+JDBC Template with Spring MVC
+-----------------------------------------------------
+
+Cretae Maven Project and add below metioned depndencies in pom.xml
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.allstate</groupId>
+	<artifactId>webapp</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>webapp Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<spring.version>5.3.22</spring.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.21</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+
+	</dependencies>
+	<build>
+		<finalName>webapp</finalName>
+	</build>
+</project>
+----------------------------------------------------------------------------------------------------
+Spring-jdbc  for JDBC template, mysql connector for DB connectivity
+jstl to use tags in jsp pages.
+
+_______________________________________________________________________________________________________
+
+web.xml
+
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>/WEB-INF/main-servlet.xml</param-value>
+  </context-param>
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+  	<servlet-name>main</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>main</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
+
+__________________________________________________________________________________________________
+
+Create Entity Student.java
+
+package com.allstate.entity;
+
+public class Student {
+
+	private int id;
+	private String name;
+	private String email;
+	private String password;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+}
+
+__________________________________________________________________________________________________
+
+Create Interface For dao
+
+package com.allstate.dao;
+
+import java.util.List;
+
+import com.allstate.entity.Student;
+
+public interface StudentDao {
+
+	public List<Student> getAll();
+	public Student getById(int id);
+	public int save(Student s);
+}
+
+_______________________________________________________________________________________________
+
+Implement Methods in DAOImpl
+
+package com.allstate.dao;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.allstate.entity.Student;
+
+@Repository
+public class StudentDaoImpl implements StudentDao{
+	
+	@Autowired
+	private JdbcTemplate template;
+	
+	public List<Student> getAll() {
+		return template.query("select * from student", 
+				BeanPropertyRowMapper.newInstance(Student.class));
+	}
+
+	public Student getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int save(Student s) {
+		return template.update("insert into student (name,email,password)values (?,?,?)",s.getName(),
+				s.getEmail(),s.getPassword());
+	}
+
+}
+
+____________________________________________________________________________________________________
+
+JDBCTemplate Dependenci will inject from Spring config file which we will wire here using @AutoWired.
+
+main-servlet.xml (Handler)
+-----------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        ">
+        <context:annotation-config></context:annotation-config>
+        <context:component-scan base-package="com.allstate.controller"></context:component-scan>
+        
+        <bean id="jspViewResolver" 
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        	<property name="suffix" value=".jsp"></property>
+        	<property name="prefix" value="/WEB-INF/views/"></property>
+        </bean>
+        <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+        	<property name="url" value="jdbc:mysql://localhost:3306/allstate"></property>
+        	<property name="username" value="root"></property>
+        	<property name="password" value="Simplilearn"></property>
+        </bean>
+        <bean id="template" class="org.springframework.jdbc.core.JdbcTemplate">
+        	<property name="dataSource" ref="ds"></property>
+        </bean>
+        <bean id="dao" class="com.allstate.dao.StudentDaoImpl"></bean>
+</beans>
+
+_______________________________________________________________________________________
+Controller to handle Request
+
+package com.allstate.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.allstate.dao.StudentDao;
+import com.allstate.entity.Student;
+
+@Controller
+public class StudentController {
+
+	@Autowired
+	private StudentDao dao;
+	
+	@RequestMapping("/getall")
+	public String getAll(ModelMap map) {
+		
+		List<Student> list=dao.getAll();
+		map.addAttribute("students",list);
+		return "viewstudents";
+	}
+	
+	@RequestMapping("/save")
+	public String addStudent(HttpServletRequest request) {
+		String name= request.getParameter("name");
+		String email= request.getParameter("email");
+		String password= request.getParameter("password");
+		
+		Student newStudent= new Student();
+		newStudent.setName(name);
+		newStudent.setEmail(email);
+		newStudent.setPassword(password);
+		
+		if(dao.save(newStudent)>0)
+			return "success";
+		else
+			return "error";
+
+	}
+}
+
+______________________________________________________________________________________________
+
+jsp pages for add and display user details
+
+viewstudents.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<c:forEach var="s" items="${students}">
+<c:out value="${s.id }"></c:out>
+<c:out value="${s.name }"></c:out>
+<c:out value="${s.email }"></c:out>
+<c:out value="${s.password }"></c:out> <br>
+</c:forEach>
+</body>
+</html>
+----------------------------------------------------------------------------------------
+success and error pages
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>User Inserted Successfully</h1>
+</body>
+</html>
+
+----------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Error Page</title>
+</head>
+<body>
+	<h1>Error while cretaing Student</h1>
+</body>
+</html>
+
+_________________________________________________________________________________________________________
+index.jsp
+---------------------
+
+<html>
+<body>
+<h2>Hello World!</h2>
+<a href="home">Click Here</a>|<a href="login">Login Here</a>
+<br>
+<a href="getall">Get All Student Details</a>
+<h1>Register</h1>
+<form action="save" method="post">
+	Name:<input type="text" name="name"/> <br><br>
+	Email:<input type="text" name="email"/> <br><br>
+	Password:<input type="password" name="password"/> <br><br>
+	<input type="submit" value="Register">
+</form>
+</body>
+</html>
+
+____________________________________________________________________________________________
+
+
+on index page create a form to get id from user
+
+and when user submits the form it will get the student details based on ID
+
+Id Student available with that Id and show edit page with user details.
+
+if user change the details and click on update and fire the update query and update the data fro perticular student.
+
+need to create 2 methods in DAOIMpl
+--------------------------------------
+Student getById(int id)
+int updateStudent(Student s)
+
+need to create 2 methods in Controller
+-------------------------------------------
+@RequestMapping("/get")
+String getById(HttpServletRequest request,ModelMap map){
+
+	map.addAttribute("student",obj);
+}
+
+@RequestMapping("/update")
+String getById(HttpServletRequest request){
+	
+	dao.update
+	return success;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
