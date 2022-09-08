@@ -1,0 +1,228 @@
+Create Maven Project
+
+select webapp archetype
+
+give artifactId, groupId and click on next and finish.
+
+You can't java folder so project> buildpath> configure buildpath>order and export tab> select JRE and maven dependencies > apply and close.
+
+you can see one error on index.jsp page
+
+so open pom.xml and add servlet-api dependency. save and error will get resolve.
+
+--------------------------------------------------------------------------
+open browser: search for apache tomact download, select tomcat 9 and download the zip file, extract the same.
+
+in eclipse> file> new > server>apache> apache tomcat 9.0> next> browse> select the extracted tomcat folder> next> finish.
+
+select project and try to run on server> select the server which is created and run the project.
+
+If getting any error for port busy then change the port.
+
+window>show view> server> double click on server> double click port number and give any port like 8123,8009 etc and save.
+
+run the application again.
+-----------------------------------------------------------------------------
+
+open pom.xml and add all spring dependencies. save.
+
+to configure frontcontroller in web.xml.
+
+open web.xml and add DispatcherServlet
+
+<servlet>
+  	<servlet-name>main</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>main</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+
+
+To configure other controller we need to create Spring config file. the file name should be the servlet name after than add (-servlet) and create XML file
+
+ex. main-servlet.xml
+
+we need to tell our front controller (dispacherServlet) that this file is my handler file. to tell that config the file name and load the same with help of listener.
+
+
+Your web.xml will look like this.
+
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>/WEB-INF/main-servlet.xml</param-value>
+  </context-param>
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+  	<servlet-name>main</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>main</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
+
+__________________________________________________________________________________________________________
+Main-servlet.xml 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        ">
+        <context:annotation-config></context:annotation-config>
+        <context:component-scan base-package="com.allstate.controller"></context:component-scan>
+        
+        <bean id="jspViewResolver" 
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        	<property name="suffix" value=".jsp"></property>
+        	<property name="prefix" value="/WEB-INF/views/"></property>
+        </bean>
+</beans>
+
+------------------------------------------------------------------------------------------------
+
+in java create HomeController
+
+package com.allstate.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+
+	
+	@RequestMapping("/home")
+	public String getHome() {
+		return "home";
+	}
+	@RequestMapping("/login")
+	public String getLogin() {
+		return "login";
+	}
+}
+
+-------------------------------------------------------------------------------------------------
+
+click on web-inf and create new folder named views and create 2 jsp files login.jsp and home.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>This is my Home Page</h1>
+</body>
+</html>
+------------------------------------------------------------------------------------------------
+
+edit index.jsp as below
+
+<html>
+<body>
+<h2>Hello World!</h2>
+<a href="home">Click Here</a>|<a href="login">Login Here</a>
+</body>
+</html>
+--------------------------------------------------------------------------------------
+
+Pom.xml
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.allstate</groupId>
+	<artifactId>webapp</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>webapp Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<spring.version>5.3.22</spring.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>webapp</finalName>
+	</build>
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
