@@ -1,0 +1,130 @@
+Consume The restful WebService from Some API
+----------------------------------------------------
+
+Fake API Link: https://jsonplaceholder.typicode.com/users/
+
+-----------------------------------------------------------------
+
+Create A Springboot project and Import the same in your IDE.
+
+create A java class fro entity
+
+package com.allstate.consumerestapi.entity;
+
+public class Address {
+
+	private String street;
+	private String suite;
+	private String city;
+	private String zipcode;
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getSuite() {
+		return suite;
+	}
+	public void setSuite(String suite) {
+		this.suite = suite;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+	
+}
+
+
+package com.allstate.consumerestapi.entity;
+
+public class User {
+	private int id;
+	private String name;
+	private String username;
+	private String email;
+	private Address address;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+}
+
+______________________________________________________________________
+
+Create Controller (UserController)
+
+package com.allstate.consumerestapi.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.allstate.consumerestapi.entity.User;
+
+@RestController
+public class UserController {
+
+	private RestTemplate restTemplate;
+	
+	private String baseUrl="https://jsonplaceholder.typicode.com/users/";
+	
+	@RequestMapping("/users")
+	public User[] getAll(){
+		restTemplate= new RestTemplate();
+		return restTemplate.getForObject(baseUrl, User[].class);
+	}
+	@RequestMapping("/users/{id}")
+	public User getById(@PathVariable int id){
+		restTemplate= new RestTemplate();
+		return restTemplate.getForObject(baseUrl+id, User.class);
+	}
+
+}
+
+________________________________________________________________
+
+Run Application and check
+
+localhost:8080/users/
+
+localhost:8080/users/8
