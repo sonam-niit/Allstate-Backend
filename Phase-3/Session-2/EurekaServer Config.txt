@@ -1,0 +1,20 @@
+Create Springboot project with web and eurekaserver dependencies.
+
+import project.
+
+On the top of main class include.
+
+@EnableEurekaServer
+
+
+Configure Application.properties file
+-----------------------------------------------
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+server.port=8456
+
+save and run the application.
+
+Localhost:8456/
+
+you can see the eurekaserver dashboard.
