@@ -1,0 +1,55 @@
+Https in Springboot
+__________________________________
+
+generate SSL using keytool
+
+move to the folder where you want to generate the key. 
+
+keytool -genkey -alias tomcat -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+
+it will ask you to enter a password twice (enter and remember the same)
+
+and give the required values like (fname , lname, organization name and if everything is Ok then last type yes and enter)
+
+Now create Springboot project and and import in your Eclipse.
+
+also copy paste the key which is generated and add the same location where you have pom.xml.
+
+create any controller.
+
+package com.allstate.https;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MainController {
+
+	@RequestMapping("/test")
+	public String test() {
+		return "Hello world from Secure SSL";
+	}
+}
+
+_____________________________________________________________________
+
+edit application.properties file
+
+server.port=8443
+server.ssl.key-store=keystore.p12
+server.ssl.key-store-password=Sonam@123
+server.ssl.keyStoreType=PKCS12
+server.ssl.keyAlias=tomcat
+
+________________________________________________________________________
+
+run the applictaion and check
+
+loclahost:8443 will give error as bad request
+
+to access 
+
+https://localhost:8443
+
+an you can see the output.
+
