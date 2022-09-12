@@ -1,0 +1,27 @@
+Apache Kafka Setup
+-------------------------------------
+
+Download kafka: https://kafka.apache.org/downloads
+
+download scala2.12 from binary downloads
+
+extract the same. Copy the folder to any other drive and rename it to kafka.
+
+Let's Start the zeekooper server to work with apache kafka.
+
+open cmd and move to the kafka folder and execute command
+
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+
+Open another cmd move to the kafka folder and execute below mentioned command:
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+Let's create an application (springboot) with 3 dependencies.
+
+1. spring web
+2. Spring for apache kafka
+3. Spring for apache kafka streams.
+
+import project in Eclipse.
