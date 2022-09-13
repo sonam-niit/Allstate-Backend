@@ -1,0 +1,100 @@
+Junit Testing
+-------------------------------
+
+create Maven poject (quickstart Archetype)
+
+open pom.xml
+
+remove junit3 dependency. also delete the default test case coming to your test folder (AppTest)
+
+now in pom.xml add junit jupiter api and junit jupiter engine dependency.
+
+<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.9.0</version>
+			<scope>test</scope>
+		</dependency>
+
+_______________________________________________________________________
+
+To run junit5 test case the compiler version must be gretaer than 7.
+
+so set up the maven compiler plugin in pom.xml after dependencies tag.
+
+<build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+--------------------------------------------------------------------
+
+save the file and right click on your project and do maven > update project.
+
+_______________________________________________________________________
+
+Now In your project
+
+right click in src/test/java and inside that create test cases.
+
+right click on package and create new Junit Test case.
+
+package com.allstate.junittest;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class Test1 {
+
+	@BeforeAll
+	public static void setupAll() {
+		System.out.println("Before All");
+	}
+	@AfterAll
+	public static void teardownAll() {
+		System.out.println("After All");
+	}
+	@BeforeEach
+	public void setup() {
+		System.out.println("Before Each Method");
+	}
+	@AfterEach
+	public void teardown() {
+		System.out.println("Afer Each Method");
+	}
+	@Test
+	public void mytest1() {
+		System.out.println("My First Test Case");
+	}
+	@Test
+	public void mytest2() {
+		System.out.println("My Second Test Case");
+	}
+
+}
+
+_____________________________________________________________________
+
+Right click on this file and run as Junit test case.
+
+check the output.
