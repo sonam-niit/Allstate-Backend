@@ -1,0 +1,84 @@
+Springboot project Dependencies
+
+Spring WEB- for web application
+Spring Data JPA- to use JPA in your project
+MYSQL Driver- to add mysql connector dependency
+Devtools- when you change code it will restrat the server automatically
+	 (no need to stop and start server again)
+____________________________________________________________________
+
+Using JPA- java persistence API
+
+Its an ORM tool : Object Relational Mapping
+
+automatically JAVA objects mapped with Database.
+
+JPA Repository is the repository provided by DATA JPA dependency which is having all the database operations basic methods.
+
+You can extend the interface and use all the methods which are available.
+____________________________________________________________________________________
+
+First of all create Entity class and add all required annottaions
+
+@Enitity: make you class as entity class
+@Table: to give the table name of your class (if you will not give then by default it will use the same name as class name)
+@Id: to create primary key
+@GeneratedValue to generate value automatically 
+@Column (to give the column name if not give then it will use the same name as variable name)
+
+_______________________________________________________________________________________________________
+
+create Your Own EntityRepository by using JPA Repository.
+
+create an Inteface which extends JPAREepository
+
+it will ask you for 2 generic values 
+1. give the entity class name
+2. give the key(primary key datatype (wrapper class))
+
+on the top of this repository add @Repository annotation to use this repository in other class for DI
+
+
+----------------------------------------------------------------------------------------------------------
+to connect with database open application.properties and configure required properties.
+
+then create a service and implements method for CRUD operation.
+
+here we are inject Repo dependency and using all available methods in JPARepository like (save, findAll, findById, deleteById etc)
+
+on the top of the class use annotation @service so we can inject this dependency in Controller.
+
+before creating controller for checking the service write test cases and check wether the service working fine or not.
+
+If working fine Then create RestController with diffrent mappings like get,post,put and delete.
+
+
+@RequestBody : to pass the JSOn object as request
+@PathVariable : pass the variable value through URL
+
+@GetMapping( get method)
+@PostMapping(Post method)
+@DeleteMapping(Delete Method)
+@PutMapping(put/update)
+
+once the controller is ready
+
+run your application and check the apis using postman tool
+
+to test Post Method
+------------------------------------
+select method post
+
+uri-  localhost:8081/users/api/
+
+click on Body > raw> from drop down select JSON
+
+{
+    "name": "sonam soni",
+    "email": "sonam@simplilearn.net",
+    "password": "Sonam@123",
+    "country": "UK"
+}
+
+and click on send check the Response.
+
